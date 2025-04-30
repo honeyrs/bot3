@@ -286,11 +286,11 @@ def get_readable_message():
         ]:
             msg += BotTheme(
                 "STATUS",
-                Status=download.status(), Url=msg_link",
+                Status=download.status(), Url=msg_link"
             )
             msg += BotTheme(
                 "BAR",
-                Bar=f"{get_progress_bar_string(download.progress())} {download.progress()}",
+                Bar=f"{get_progress_bar_string(download.progress())} {download.progress()}"
             )
             msg += BotTheme("PROCESSED", Processed=f"{download.processed_bytes()} of {download.size()}")
             msg += BotTheme("ETA", Eta=download.eta())
