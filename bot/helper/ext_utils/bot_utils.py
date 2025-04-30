@@ -284,14 +284,8 @@ def get_readable_message():
             MirrorStatus.STATUS_SEEDING,
             MirrorStatus.STATUS_METADATA,
         ]:
-            msg += BotTheme(
-                "STATUS",
-                Status=download.status(), Url=msg_link"
-            )
-            msg += BotTheme(
-                "BAR",
-                Bar=f"{get_progress_bar_string(download.progress())} {download.progress()}"
-            )
+            msg += BotTheme("STATUS", Status=download.status(), Url=msg_link)
+            msg += BotTheme("BAR", Bar=f"{get_progress_bar_string(download.progress())} {download.progress()}")
             msg += BotTheme("PROCESSED", Processed=f"{download.processed_bytes()} of {download.size()}")
             msg += BotTheme("ETA", Eta=download.eta())
             msg += BotTheme("SPEED", Speed=download.speed())
