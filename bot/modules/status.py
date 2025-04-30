@@ -86,7 +86,7 @@ async def status_pages(_, query):
             refresh_status[user_id] = time()
         await editMessage(
             query.message,
-            f"{(await user_info(user_id)).mention(style='html')}, <i>Refreshing Status...</i>",
+            f"{(await user_info(user_id)).mention(style='html')}, <i>Refreshing Status...♻️</i>",
         )
         await sleep(1.5)
         await update_all_messages(True)
