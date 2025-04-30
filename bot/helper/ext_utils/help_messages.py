@@ -327,7 +327,7 @@ But you can always use -c or -category with to select category before download s
 """
 
 help_string = [
-    f"""⌬ <b><i>Basic Commands!</i></b>
+    f"""⌬ <b><i>Bᴀsɪᴄ Cᴏᴍᴍᴀɴᴅs!</i></b>
 
 <b>Use Mirror commands to download your link/file/rcl</b>
 ┠ /{BotCommands.MirrorCommand[0]} or /{BotCommands.MirrorCommand[1]}: Download via file/url/media to Upload to Cloud Drive.
@@ -352,7 +352,7 @@ help_string = [
 
 <b>Cancel Tasks:</b>
 ┖ /{BotCommands.CancelMirror}: Cancel task by cancel_gid or reply.""",
-    f"""⌬ <b><i>Users Commands!</i></b>
+    f"""⌬ <b><i>Usᴇʀs Cᴏᴍᴍᴀɴᴅs!</i></b>
 
 <b>Bot Settings:</b>
 ┖ /{BotCommands.UserSetCommand[0]} or /{BotCommands.UserSetCommand[1]} [query]: Open User Settings (PM also)
@@ -367,7 +367,7 @@ help_string = [
 
 <b>RSS Feed:</b>
 ┖ /{BotCommands.RssCommand}: Open RSS Menu (Sub/Unsub/Start/Pause)""",
-    f"""⌬ <b><i>Owner or Sudos Commands!</i></b>
+    f"""⌬ <b><i>Oᴡɴᴇʀ ᴏʀ Sᴜᴅᴏs Cᴏᴍᴍᴀɴᴅs!</i></b>
 
 <b>Bot Settings:</b>
 ┠ /{BotCommands.BotSetCommand[0]} or /{BotCommands.BotSetCommand[1]} [query]: Open Bot Settings (Only Owner & Sudo).
@@ -408,7 +408,7 @@ help_string = [
 <b>Extras:</b>
 ┠ /{BotCommands.AddImageCommand} [url/photo]: Add Images in Bot
 ┖ /{BotCommands.ImagesCommand}: Generate grid of Stored Images.""",
-    f"""⌬ <b><i>Miscellaneous Commands!</i></b>
+    f"""⌬ <b><i>Mɪsᴄᴇʟʟᴀɴᴇᴏᴜs Cᴏᴍᴍᴀɴᴅs!</i></b>
 
 <b>Extras:</b>
 ┠ /{BotCommands.SpeedCommand[0]} or /{BotCommands.SpeedCommand[1]}: Check Speed in VPS/Server.
