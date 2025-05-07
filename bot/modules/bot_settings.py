@@ -55,6 +55,20 @@ from bot.modules.torrent_search import initiate_search_tools
 from bot.modules.rss import addJob
 from bot.helper.themes import AVL_THEMES
 
+# Define restricted variables accessible only by the owner
+restricted_vars = [
+    "TELEGRAM_HASH",
+    "BOT_TOKEN",
+    "MEGA_EMAIL",
+    "MEGA_PASSWORD",
+    "TELEGRAM_API",
+    "OWNER_ID",
+    "USER_SESSION_STRING",
+    "DATABASE_URL",
+    "JD_EMAIL",
+    "JD_PASS",
+]
+
 START = 0
 STATE = "view"
 handler_dict = {}
@@ -97,21 +111,8 @@ bool_vars = [
     "UPGRADE_PACKAGES",
     "SCREENSHOTS_MODE",
 ]
-restricted_vars = [
-    "TELEGRAM_HASH",
-    "BOT_TOKEN",
-    "MEGA_EMAIL",
-    "MEGA_PASSWORD",
-    "TELEGRAM_API",
-    "OWNER_ID",
-    "USER_SESSION_STRING",
-    "DATABASE_URL",
-    "JD_EMAIL",
-    "JD_PASS",
-]
 
 async def load_config():
-
     BOT_TOKEN = environ.get("BOT_TOKEN", "")
     if len(BOT_TOKEN) == 0:
         BOT_TOKEN = config_dict["BOT_TOKEN"]
@@ -196,6 +197,13 @@ async def load_config():
     if len(MEGA_EMAIL) == 0 or len(MEGA_PASSWORD) == 0:
         MEGA_EMAIL = ""
         MEGA_PASSWORD = ""
+
+    JD_EMAIL = environ.get("JD_EMAIL", "")
+    JD_PASS = environ.get("JD_PASS", "")
+    if len(JD_EMAIL) == 0:
+        JD_EMAIL = ""
+    if len(JD_PASS) == 0:
+        JD_PASS = ""
 
     METADATA = environ.get("METADATA", "")
 
@@ -374,9 +382,6 @@ async def load_config():
 
     USER_TD_SA = environ.get("USER_TD_SA", "")
     USER_TD_SA = USER_TD_SA.lower() if len(USER_TD_SA) != 0 else ""
-
-    SHOW_MEDIAINFO = environ.get("SHOW_MEDIAINFO", "")
-    SHOW_MEDIAINFO = SHOW_MEDIAINFO.lower() == "true"
 
     SHOW_MEDIAINFO = environ.get("SHOW_MEDIAINFO", "")
     SHOW_MEDIAINFO = SHOW_MEDIAINFO.lower() == "true"
@@ -596,7 +601,7 @@ async def load_config():
 <b>Status</b>: <code>{status}</code>
 <b>Start Date</b>: <code>{startdate}</code>
 <b>End Date</b>: <code>{enddate}</code>
-<b>Season</b>: <code>{season}</code>
+<b>Season</b>: <code>{season}</codedia_group}
 <b>Country</b>: {country}
 <b>Episodes</b>: <code>{episodes}</code>
 <b>Duration</b>: <code>{duration}</code>
@@ -674,129 +679,7 @@ async def load_config():
             for line in lines:
                 temp = line.strip().split()
                 if len(temp) == 2:
-                    shorteners_list.append({"domain": temp[0], "api_key": temp[1]})
-
-    config_dict.update(
-        {
-            "ANIME_TEMPLATE": DEF_ANI_TEMP,
-            "AS_DOCUMENT": AS_DOCUMENT,
-            "AUTHORIZED_CHATS": AUTHORIZED_CHATS,
-            "AUTO_DELETE_MESSAGE_DURATION": AUTO_DELETE_MESSAGE_DURATION,
-            "BASE_URL": BASE_URL,
-            "BASE_URL_PORT": BASE_URL_PORT,
-            "BLACKLIST_USERS": BLACKLIST_USERS,
-            "BOT_TOKEN": BOT_TOKEN,
-            "BOT_MAX_TASKS": BOT_MAX_TASKS,
-            "CAP_FONT": CAP_FONT,
-            "CMD_SUFFIX": CMD_SUFFIX,
-            "DATABASE_URL": DATABASE_URL,
-            "REAL_DEBRID_API": REAL_DEBRID_API,
-            "DEBRID_LINK_API": DEBRID_LINK_API,
-            "FILELION_API": FILELION_API,
-            "DELETE_LINKS": DELETE_LINKS,
-            "DEFAULT_UPLOAD": DEFAULT_UPLOAD,
-            "DOWNLOAD_DIR": DOWNLOAD_DIR,
-            "EXCEP_CHATS": EXCEP_CHATS,
-            "STORAGE_THRESHOLD": STORAGE_THRESHOLD,
-            "TORRENT_LIMIT": TORRENT_LIMIT,
-            "DIRECT_LIMIT": DIRECT_LIMIT,
-            "YTDLP_LIMIT": YTDLP_LIMIT,
-            "GDRIVE_LIMIT": GDRIVE_LIMIT,
-            "CLONE_LIMIT": CLONE_LIMIT,
-            "MEGA_LIMIT": MEGA_LIMIT,
-            "LEECH_LIMIT": LEECH_LIMIT,
-            "FSUB_IDS": FSUB_IDS,
-            "USER_MAX_TASKS": USER_MAX_TASKS,
-            "USER_TIME_INTERVAL": USER_TIME_INTERVAL,
-            "PLAYLIST_LIMIT": PLAYLIST_LIMIT,
-            "DAILY_TASK_LIMIT": DAILY_TASK_LIMIT,
-            "DAILY_MIRROR_LIMIT": DAILY_MIRROR_LIMIT,
-            "DAILY_LEECH_LIMIT": DAILY_LEECH_LIMIT,
-            "MIRROR_LOG_ID": MIRROR_LOG_ID,
-            "LEECH_LOG_ID": LEECH_LOG_ID,
-            "LINKS_LOG_ID": LINKS_LOG_ID,
-            "BOT_PM": BOT_PM,
-            "DISABLE_DRIVE_LINK": DISABLE_DRIVE_LINK,
-            "BOT_THEME": BOT_THEME,
-            "IMAGES": IMAGES,
-            "IMG_SEARCH": IMG_SEARCH,
-            "IMG_PAGE": IMG_PAGE,
-            "IMDB_TEMPLATE": DEF_IMDB_TEMP,
-            "AUTHOR_NAME": AUTHOR_NAME,
-            "AUTHOR_URL": AUTHOR_URL,
-            "COVER_IMAGE": COVER_IMAGE,
-            "TITLE_NAME": TITLE_NAME,
-            "GD_INFO": GD_INFO,
-            "GDTOT_CRYPT": GDTOT_CRYPT,
-            "JIODRIVE_TOKEN": JIODRIVE_TOKEN,
-            "EQUAL_SPLITS": EQUAL_SPLITS,
-            "EXTENSION_FILTER": EXTENSION_FILTER,
-            "GDRIVE_ID": GDRIVE_ID,
-            "INCOMPLETE_TASK_NOTIFIER": INCOMPLETE_TASK_NOTIFIER,
-            "INDEX_URL": INDEX_URL,
-            "IS_TEAM_DRIVE": IS_TEAM_DRIVE,
-            "LEECH_FILENAME_PREFIX": LEECH_FILENAME_PREFIX,
-            "LEECH_FILENAME_SUFFIX": LEECH_FILENAME_SUFFIX,
-            "LEECH_FILENAME_CAPTION": LEECH_FILENAME_CAPTION,
-            "LEECH_FILENAME_REMNAME": LEECH_FILENAME_REMNAME,
-            "MIRROR_FILENAME_PREFIX": MIRROR_FILENAME_PREFIX,
-            "MIRROR_FILENAME_SUFFIX": MIRROR_FILENAME_SUFFIX,
-            "MIRROR_FILENAME_REMNAME": MIRROR_FILENAME_REMNAME,
-            "LEECH_SPLIT_SIZE": LEECH_SPLIT_SIZE,
-            "LOGIN_PASS": LOGIN_PASS,
-            "TOKEN_TIMEOUT": TOKEN_TIMEOUT,
-            "MEDIA_GROUP": MEDIA_GROUP,
-            "MEGA_EMAIL": MEGA_EMAIL,
-            "MEGA_PASSWORD": MEGA_PASSWORD,
-            "METADATA": METADATA,
-            "MDL_TEMPLATE": MDL_TEMPLATE,
-            "OWNER_ID": OWNER_ID,
-            "QUEUE_ALL": QUEUE_ALL,
-            "QUEUE_DOWNLOAD": QUEUE_DOWNLOAD,
-            "QUEUE_UPLOAD": QUEUE_UPLOAD,
-            "RCLONE_FLAGS": RCLONE_FLAGS,
-            "RCLONE_PATH": RCLONE_PATH,
-            "RCLONE_SERVE_URL": RCLONE_SERVE_URL,
-            "RCLONE_SERVE_USER": RCLONE_SERVE_USER,
-            "RCLONE_SERVE_PASS": RCLONE_SERVE_PASS,
-            "RCLONE_SERVE_PORT": RCLONE_SERVE_PORT,
-            "RSS_CHAT": RSS_CHAT,
-            "RSS_DELAY": RSS_DELAY,
-            "SAVE_MSG": SAVE_MSG,
-            "SAFE_MODE": SAFE_MODE,
-            "SEARCH_API_LINK": SEARCH_API_LINK,
-            "SEARCH_LIMIT": SEARCH_LIMIT,
-            "SEARCH_PLUGINS": SEARCH_PLUGINS,
-            "SET_COMMANDS": SET_COMMANDS,
-            "SHOW_MEDIAINFO": SHOW_MEDIAINFO,
-            "SCREENSHOTS_MODE": SCREENSHOTS_MODE,
-            "CLEAN_LOG_MSG": CLEAN_LOG_MSG,
-            "SHOW_EXTRA_CMDS": SHOW_EXTRA_CMDS,
-            "SOURCE_LINK": SOURCE_LINK,
-            "STATUS_LIMIT": STATUS_LIMIT,
-            "STATUS_UPDATE_INTERVAL": STATUS_UPDATE_INTERVAL,
-            "STOP_DUPLICATE": STOP_DUPLICATE,
-            "SUDO_USERS": SUDO_USERS,
-            "TELEGRAM_API": TELEGRAM_API,
-            "TELEGRAM_HASH": TELEGRAM_HASH,
-            "TIMEZONE": TIMEZONE,
-            "TORRENT_TIMEOUT": TORRENT_TIMEOUT,
-            "UPSTREAM_REPO": UPSTREAM_REPO,
-            "UPSTREAM_BRANCH": UPSTREAM_BRANCH,
-            "UPGRADE_PACKAGES": UPGRADE_PACKAGES,
-            "USER_SESSION_STRING": USER_SESSION_STRING,
-            "USER_TD_MODE": USER_TD_MODE,
-            "USER_TD_SA": USER_TD_SA,
-            "USE_SERVICE_ACCOUNTS": USE_SERVICE_ACCOUNTS,
-            "WEB_PINCODE": WEB_PINCODE,
-            "YT_DLP_OPTIONS": YT_DLP_OPTIONS,
-        }
-    )
-
-    if DATABASE_URL:
-        await DbManger().update_config(config_dict)
-    await gather(initiate_search_tools(), start_from_queued(), rclone_serve_booter())
-
+                    shorteners_list.append({"domain": temp[0], "api	
 
 async def get_buttons(key=None, edit_type=None, edit_mode=None, mess=None):
     buttons = ButtonMaker()
@@ -808,10 +691,12 @@ async def get_buttons(key=None, edit_type=None, edit_mode=None, mess=None):
         buttons.ibutton("Close", "botset close")
         msg = "<b><i>Bot Settings:</i></b>"
     elif key == "var":
+        # Only show variables if user is owner or variable is not restricted
         for k in list(OrderedDict(sorted(config_dict.items())).keys())[
             START : 10 + START
         ]:
-            buttons.ibutton(k, f"botset editvar {k}")
+            if k not in restricted_vars or mess.from_user.id == config_dict["OWNER_ID"]:
+                buttons.ibutton(k, f"botset editvar {k}")
         buttons.ibutton("Back", "botset back")
         buttons.ibutton("Close", "botset close")
         for x in range(0, len(config_dict) - 1, 10):
@@ -860,6 +745,13 @@ async def get_buttons(key=None, edit_type=None, edit_mode=None, mess=None):
             )
         msg = f"Qbittorrent Options | Page: {int(START/10)+1} | State: {STATE}"
     elif edit_type == "editvar":
+        # Security check for restricted variables
+        if key in restricted_vars and mess.from_user.id != config_dict["OWNER_ID"]:
+            msg = "This setting is only available for the owner!"
+            buttons.ibutton("Back", "botset back var")
+            buttons.ibutton("Close", "botset close")
+            button = buttons.build_menu(2)
+            return msg, button
         msg = f"<b>Variable:</b> <code>{key}</code>\n\n"
         msg += f'<b>Description:</b> {default_desp.get(key, "No Description Provided")}\n\n'
         if mess.chat.type == ChatType.PRIVATE:
@@ -926,15 +818,13 @@ async def update_buttons(message, key=None, edit_type=None, edit_mode=None):
 
 
 async def edit_variable(_, message, pre_message, key):
-    handler_dict[message.chat.id] = False
-   
     # Security check for restricted variables
-    if key in restricted_vars and message.from_user.id != Config.get('OWNER_ID'):
-        await send_message(message, "This setting only available for owner!")
+    if key in restricted_vars and message.from_user.id != config_dict["OWNER_ID"]:
+        await sendMessage(message, "This setting is only available for the owner!")
         await update_buttons(pre_message, "var")
-        await delete_message(message)
+        await deleteMessage(message)
         return
-
+    handler_dict[message.chat.id] = False
     value = message.text
     if key == "RSS_DELAY":
         value = int(value)
@@ -942,8 +832,7 @@ async def edit_variable(_, message, pre_message, key):
     elif key == "DOWNLOAD_DIR":
         if not value.endswith("/"):
             value += "/"
-    elif key in ["LINKS_LOG_ID", "RSS_CHAT"]:
-        value = int(value)
+    elif key in ["LINKS_LOG_ID    key]: value = int(value)
     elif key == "STATUS_UPDATE_INTERVAL":
         value = int(value)
         if len(download_dict) != 0:
@@ -1052,7 +941,7 @@ async def edit_aria(_, message, pre_message, key):
     aria2_options[key] = value
     await update_buttons(pre_message, "aria")
     await deleteMessage(message)
-    if DATABASE_URL:
+    if DATABASE_URLხ
         await DbManger().update_aria2(key, value)
 
 
@@ -1258,6 +1147,11 @@ async def edit_bot_settings(client, query):
         await query.answer()
         await update_buttons(message, data[1])
     elif data[1] == "resetvar":
+        # Security check for restricted variables
+        if data[2] in restricted_vars and query.from_user.id != config_dict["OWNER_ID"]:
+            await query.answer("This setting is only available for the owner!", show_alert=True)
+            await update_buttons(message, "var")
+            return
         handler_dict[message.chat.id] = False
         await query.answer("Reset Done!", show_alert=True)
         value = ""
@@ -1327,7 +1221,7 @@ async def edit_bot_settings(client, query):
             await rclone_serve_booter()
     elif data[1] == "resetaria":
         handler_dict[message.chat.id] = False
-        aria2_defaults = await sync_to_async(aria2.client.get_global_option)
+        aria2_defaults = await sync_to_async(aria2.client.get_globalisering_option)
         if aria2_defaults[data[2]] == aria2_options[data[2]]:
             await query.answer("Value already same as you added in aria.sh!")
             return
@@ -1365,7 +1259,7 @@ async def edit_bot_settings(client, query):
     elif data[1] == "emptyqbit":
         handler_dict[message.chat.id] = False
         await query.answer()
-        await sync_to_async(get_client().app_set_preferences, {data[2]: value})
+        await sync_to_async(get_client().app_set_preferences, {data[2]: ""})
         qbit_options[data[2]] = ""
         await update_buttons(message, "qbit")
         if DATABASE_URL:
@@ -1388,6 +1282,11 @@ async def edit_bot_settings(client, query):
         if DATABASE_URL:
             await DbManger().update_config({data[2]: value})
     elif data[1] == "editvar":
+        # Security check for restricted variables
+        if data[2] in restricted_vars and query.from_user.id != config_dict["OWNER_ID"]:
+            await query.answer("This setting is only available for the owner!", show_alert=True)
+            await update_buttons(message, "var")
+            return
         handler_dict[message.chat.id] = False
         await query.answer()
         edit_mode = len(data) == 4
@@ -1398,6 +1297,11 @@ async def edit_bot_settings(client, query):
         rfunc = partial(update_buttons, message, data[2], data[1], edit_mode)
         await event_handler(client, query, pfunc, rfunc)
     elif data[1] == "showvar":
+        # Security check for restricted variables
+        if data[2] in restricted_vars and query.from_user.id != config_dict["OWNER_ID"]:
+            await query.answer("This setting is only available for the owner!", show_alert=True)
+            await update_buttons(message, "var")
+            return
         value = config_dict[data[2]]
         if len(str(value)) > 200:
             await query.answer()
@@ -1431,7 +1335,7 @@ async def edit_bot_settings(client, query):
         await query.answer()
         await update_buttons(message, data[2], data[1])
         pfunc = partial(edit_qbit, pre_message=message, key=data[2])
-        rfunc = partial(update_buttons, message, "var")
+        rfunc = partial(update_buttons, message, "qbit")
         await event_handler(client, query, pfunc, rfunc)
     elif data[1] == "editqbit" and STATE == "view":
         value = qbit_options[data[2]]
