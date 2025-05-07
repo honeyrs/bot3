@@ -97,7 +97,18 @@ bool_vars = [
     "UPGRADE_PACKAGES",
     "SCREENSHOTS_MODE",
 ]
-
+restricted_vars = [
+    "TELEGRAM_HASH",
+    "BOT_TOKEN",
+    "MEGA_EMAIL",
+    "MEGA_PASSWORD",
+    "TELEGRAM_API",
+    "OWNER_ID",
+    "USER_SESSION_STRING",
+    "DATABASE_URL",
+    "JD_EMAIL",
+    "JD_PASS",
+]
 
 async def load_config():
 
@@ -916,6 +927,14 @@ async def update_buttons(message, key=None, edit_type=None, edit_mode=None):
 
 async def edit_variable(_, message, pre_message, key):
     handler_dict[message.chat.id] = False
+   
+    # Security check for restricted variables
+    if key in restricted_vars and message.from_user.id != Config.get('OWNER_ID'):
+        await send_message(message, "This setting only available for owner!")
+        await update_buttons(pre_message, "var")
+        await delete_message(message)
+        return
+
     value = message.text
     if key == "RSS_DELAY":
         value = int(value)
